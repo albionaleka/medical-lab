@@ -47,4 +47,20 @@ router.post("/reset-password", async (req, res) => {
   }
 });
 
+router.post("/reset-password/reset", async (req, res) => {
+  try {
+    const { email, otp, newPassword } = req.body;
+    if (!email || !otp || !newPassword) {
+      return res
+        .status(400)
+        .json({ error: "Email, OTP, and new password are required" });
+    }
+
+    const result = await UserService.resetPassword(email, otp, newPassword);
+    res.json(result);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 export default router;

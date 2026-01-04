@@ -74,8 +74,8 @@ export class UserService {
       throw new Error("User with this email does not exist");
     }
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    user.resetOTP = otp;
-    user.otpExpiry = Date.now() + 15 * 60 * 1000;
+    user.reset_otp = otp;
+    user.reset_otp_expires_at = new Date(Date.now() + 15 * 60 * 1000);
     await user.save();
 
     try {
@@ -90,5 +90,29 @@ export class UserService {
     }
 
     return { message: "OTP sent to email" };
+  }
+
+  static async resetPassword(email, otp, newPassword) {
+    const user = await User.findOne({ where: { email } });
+    console.log(user);
+
+    if (!user) {
+      throw new Error("User with this email does not exist");
+    }
+
+    if (
+      user.reset_otp !== otp ||
+      Date.now() > new Date(user.reset_otp_expires_at).getTime()
+    ) {
+      throw new Error("Invalid or expired OTP");
+    }
+
+    const passwordHash = await bcrypt.hash(newPassword, SALT);
+    user.passwordHash = passwordHash;
+    user.reset_otp = null;
+    user.reset_otp_expires_at = null;
+    await user.save();
+
+    return { user, message: "Password has been reset successfully" };
   }
 }
