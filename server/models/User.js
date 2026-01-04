@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../db/database.js";
+import sequelize from "../config/database.js";
 
 export const User = sequelize.define(
   "User",
@@ -32,6 +32,16 @@ export const User = sequelize.define(
     role: {
       type: DataTypes.ENUM("ADMIN", "LABORANT", "DOCTOR"),
       allowNull: false,
+    },
+
+    reset_otp: {
+      type: DataTypes.STRING(10),
+      allowNull: true,
+    },
+
+    reset_otp_expires_at: {
+      type: DataTypes.DATE,
+      allowNull: true,
     },
   },
   {
