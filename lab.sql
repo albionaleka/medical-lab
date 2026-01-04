@@ -21,3 +21,19 @@ CREATE TABLE patients (
   email VARCHAR(100),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+USE medicalLab;
+CREATE TABLE user_profile (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  first_name VARCHAR(50),
+  last_name VARCHAR(50),
+  phone VARCHAR(20),
+  address VARCHAR(255),
+  birthday DATE,
+  job_title VARCHAR(100),
+  profile_image VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
