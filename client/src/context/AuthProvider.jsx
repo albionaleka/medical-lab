@@ -40,11 +40,25 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const sendResetOtp = async (email) => {
+    try {
+      setLoading(true);
+      const { data } = await api.post("/api/auth/reset-password", { email });
+      toast.success(data.message);
+    } catch (error) {
+      toast.error(error.response?.data?.error || "Failed to send OTP");
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const value = {
     loggedIn,
     token,
     loading,
     login,
+    sendResetOtp,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
