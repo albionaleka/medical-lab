@@ -75,7 +75,7 @@ const Login = () => {
                 Remember me
               </label>
             </div>
-            <a className="text-sm underline" href="/reset-password">
+            <a className="text-sm underline" href="/forgot-password">
               Forgot password?
             </a>
           </div>
