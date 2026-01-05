@@ -43,7 +43,7 @@ const AuthProvider = ({ children }) => {
   const sendResetOtp = async (email) => {
     try {
       setLoading(true);
-      const { data } = await api.post("/api/auth/reset-password", { email });
+      const { data } = await api.post("/api/auth/reset-otp", { email });
       toast.success(data.message);
     } catch (error) {
       toast.error(error.response?.data?.error || "Failed to send OTP");

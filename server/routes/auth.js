@@ -33,7 +33,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.post("/reset-password", async (req, res) => {
+router.post("/reset-otp", async (req, res) => {
   try {
     const { email } = req.body;
     if (!email) {
@@ -47,7 +47,7 @@ router.post("/reset-password", async (req, res) => {
   }
 });
 
-router.post("/reset-password/reset", async (req, res) => {
+router.post("/reset-password", async (req, res) => {
   try {
     const { email, otp, newPassword } = req.body;
     if (!email || !otp || !newPassword) {
