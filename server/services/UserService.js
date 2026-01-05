@@ -8,7 +8,7 @@ dotenv.config();
 const SALT = parseInt(process.env.SALT) || 10;
 
 export class UserService {
-  static async register(fullName, email, password, role) {
+  static async register(email, password, role) {
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
       throw new Error("User with this email already exists");
@@ -17,7 +17,6 @@ export class UserService {
     const passwordHash = await bcrypt.hash(password, SALT);
 
     const user = await User.create({
-      fullName,
       email,
       passwordHash,
       role,
@@ -32,7 +31,6 @@ export class UserService {
     return {
       user: {
         id: user.id,
-        fullName: user.fullName,
         email: user.email,
         role: user.role,
       },
