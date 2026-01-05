@@ -42,3 +42,24 @@ USE medicalLab;
 ALTER TABLE users
 	ADD COLUMN reset_otp VARCHAR(10),
 	ADD COLUMN reset_otp_expires_at DATETIME;
+    
+USE medicalLab;
+ALTER TABLE user_profile
+	ADD UNIQUE (user_id);
+    
+USE medicalLab;
+ALTER TABLE users
+  DROP COLUMN fullName;
+  
+USE medicalLab;
+DELIMITER $$
+
+CREATE TRIGGER after_user_insert
+AFTER INSERT ON users
+FOR EACH ROW
+BEGIN
+  INSERT INTO user_profile (user_id, created_at, updated_at)
+  VALUES (NEW.id, NOW(), NOW());
+END$$
+
+DELIMITER;
