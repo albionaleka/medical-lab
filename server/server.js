@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import sequelize, { connectDB } from "./config/database.js";
 import authRoutes from "./routes/auth.js";
+import profileRoutes from "./routes/profile.js";
+import "./models/index.js";
 
 dotenv.config();
 
@@ -23,6 +25,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/profile", profileRoutes);
 
 sequelize
   .sync({ alter: true })
