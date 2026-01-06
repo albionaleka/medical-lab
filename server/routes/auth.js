@@ -1,5 +1,6 @@
 import express from "express";
 import { UserService } from "../services/UserService.js";
+import { authenticate } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -58,6 +59,20 @@ router.post("/reset-password", async (req, res) => {
 
     const result = await UserService.resetPassword(email, otp, newPassword);
     res.json(result);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+router.get("/me", authenticate, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const user = await UserService.getUserById(userId);
+    res.json({
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

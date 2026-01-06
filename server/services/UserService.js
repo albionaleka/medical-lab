@@ -113,4 +113,18 @@ export class UserService {
 
     return { user, message: "Password has been reset successfully" };
   }
+
+  static async getUserById(id) {
+    const user = await User.findByPk(id, {
+      attributes: {
+        exclude: ["passwordHash", "reset_otp", "reset_otp_expires_at"],
+      },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    return user;
+  }
 }
