@@ -63,3 +63,7 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+USE medicalLab;
+ALTER TABLE users
+ADD UNIQUE INDEX unique_email (email);
