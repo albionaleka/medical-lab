@@ -3,16 +3,18 @@ import { useContext, useState } from "react";
 import { IoMail } from "react-icons/io5";
 import { IoIosLock } from "react-icons/io";
 
-const Login = () => {
-  const { login } = useContext(AuthContext);
+const Register = () => {
+  const { register } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    role: null,
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(formData.email, formData.password);
+    console.log(formData);
+    await register(formData.email, formData.password, formData.role);
   };
 
   const onChange = (e) => {
@@ -29,18 +31,10 @@ const Login = () => {
           className="md:w-96 w-80 flex flex-col items-center justify-center"
           onSubmit={handleSubmit}
         >
-          <h2 className="text-4xl text-gray-900 font-medium">Sign in</h2>
-          <p className="text-sm text-gray-500/90 mt-3">
-            Welcome back! Please sign in to continue
+          <h2 className="text-4xl text-gray-900 font-medium">Register</h2>
+          <p className="text-sm text-gray-500/90 text-center mt-3 mb-6">
+            Welcome to Medica! Please create an account to continue
           </p>
-
-          <div className="flex items-center gap-4 w-full my-5">
-            <div className="w-full h-px bg-gray-300/90"></div>
-            <p className="w-full text-nowrap text-sm text-gray-500/90">
-              Sign in with email
-            </p>
-            <div className="w-full h-px bg-gray-300/90"></div>
-          </div>
 
           <div className="flex items-center w-full bg-transparent border border-gray-300/60 h-12 rounded-full overflow-hidden pl-6 gap-2">
             <IoMail size={20} color="#6B7280" />
@@ -68,28 +62,33 @@ const Login = () => {
             />
           </div>
 
-          <div className="w-full flex items-center justify-between mt-8 text-gray-500/80">
-            <div className="flex items-center gap-2">
-              <input className="h-5" type="checkbox" id="checkbox" />
-              <label className="text-sm" htmlFor="checkbox">
-                Remember me
-              </label>
-            </div>
-            <a className="text-sm underline" href="/forgot-password">
-              Forgot password?
-            </a>
+          <div className="w-full flex items-center justify-center gap-4 mt-6 text-gray-500/80">
+            <select
+              name="role"
+              value={formData.role || ""}
+              onChange={onChange}
+              className="w-full border border-gray-300/60 h-12 rounded-full pl-6 text-gray-500/80 outline-none text-sm"
+              required
+            >
+              <option value="" disabled>
+                Select Role
+              </option>
+              <option value={"LABORANT"}>Laborant</option>
+              <option value={"DOCTOR"}>Doctor</option>
+            </select>
           </div>
 
           <button
             type="submit"
+            onClick={handleSubmit}
             className="mt-8 w-full h-11 rounded-full text-white bg-green-500 hover:opacity-90 transition-opacity"
           >
-            Login
+            Register
           </button>
           <p className="text-gray-500/90 text-sm mt-4">
-            Don’t have an account?{" "}
-            <a className="text-green-400 hover:underline" href="/register">
-              Sign up
+            Already have an account?{" "}
+            <a className="text-green-400 hover:underline" href="/login">
+              Sign in
             </a>
           </p>
         </form>
@@ -98,4 +97,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import SendResetOtp from "./components/SendResetOtp";
+import Register from "./components/Register";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<SendResetOtp />} />
+      <Route path="/register" element={<Register />} />
     </Routes>
   );
 }
