@@ -81,13 +81,13 @@ const Register = () => {
           <button
             type="submit"
             onClick={handleSubmit}
-            className="mt-8 w-full h-11 rounded-full text-white bg-green-500 hover:opacity-90 transition-opacity"
+            className="mt-8 w-full h-11 rounded-full text-white bg-indigo-500 hover:opacity-90 transition-opacity"
           >
             Register
           </button>
           <p className="text-gray-500/90 text-sm mt-4">
             Already have an account?{" "}
-            <a className="text-green-400 hover:underline" href="/login">
+            <a className="text-indigo-400 hover:underline" href="/login">
               Sign in
             </a>
           </p>

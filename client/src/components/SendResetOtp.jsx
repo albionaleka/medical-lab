@@ -18,7 +18,7 @@ const SendResetOtp = () => {
   return (
     <div className="flex min-h-screen bg-gray-50 items-center justify-center px-4">
       <div className=" flex flex-col items-center justify-center p-6 bg-white shadow-md rounded-xl border border-gray-200 hover:shadow-lg transition-shadow duration-300 w-full max-w-md">
-        <h2 className="text-4xl text-gray-900 font-medium">Reset Password</h2>
+        <h2 className="text-2xl text-gray-900 font-medium">Reset Password</h2>
 
         <p className="text-sm text-center text-gray-500/90 p-2 mb-4">
           Enter your email to receive a reset password OTP.
@@ -39,7 +39,7 @@ const SendResetOtp = () => {
           </div>
           <button
             type="submit"
-            className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition-colors"
+            className="bg-indigo-500 text-white p-2 rounded-full hover:bg-indigo-600 transition-colors"
           >
             Send OTP
           </button>
