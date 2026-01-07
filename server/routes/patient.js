@@ -41,4 +41,13 @@ router.get("/:id", authenticate, async (req, res) => {
   }
 });
 
+router.get("/", authenticate, async (req, res) => {
+  try {
+    const patients = await PatientService.getAllPatients();
+    res.json(patients);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 export default router;

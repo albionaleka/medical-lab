@@ -32,4 +32,9 @@ export class PatientService {
     }
     return patient;
   }
+
+  static async getAllPatients() {
+    const patients = await Patient.findAll();
+    return patients;
+  }
 }
