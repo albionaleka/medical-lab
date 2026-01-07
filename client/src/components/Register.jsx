@@ -31,7 +31,7 @@ const Register = () => {
           className="md:w-96 w-80 flex flex-col items-center justify-center"
           onSubmit={handleSubmit}
         >
-          <h2 className="text-4xl text-gray-900 font-medium">Register</h2>
+          <h2 className="text-3xl text-gray-900 font-medium">Register</h2>
           <p className="text-sm text-gray-500/90 text-center mt-3 mb-6">
             Welcome to Medica! Please create an account to continue
           </p>

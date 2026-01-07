@@ -29,7 +29,7 @@ const Login = () => {
           className="md:w-96 w-80 flex flex-col items-center justify-center"
           onSubmit={handleSubmit}
         >
-          <h2 className="text-4xl text-gray-900 font-medium">Sign in</h2>
+          <h2 className="text-3xl text-gray-900 font-medium">Sign in</h2>
           <p className="text-sm text-gray-500/90 mt-3">
             Welcome back! Please sign in to continue
           </p>
