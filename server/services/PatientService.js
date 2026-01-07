@@ -24,4 +24,12 @@ export class PatientService {
 
     return newPatient;
   }
+
+  static async getPatientById(patientId) {
+    const patient = await Patient.findByPk(patientId);
+    if (!patient) {
+      throw new Error("Patient not found");
+    }
+    return patient;
+  }
 }

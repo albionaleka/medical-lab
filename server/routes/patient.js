@@ -31,4 +31,14 @@ router.post("/", authenticate, async (req, res) => {
   }
 });
 
+router.get("/:id", authenticate, async (req, res) => {
+  try {
+    const patientId = req.params.id;
+    const patient = await PatientService.getPatientById(patientId);
+    res.json(patient);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+});
+
 export default router;
