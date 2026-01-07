@@ -30,17 +30,9 @@ const Login = () => {
           onSubmit={handleSubmit}
         >
           <h2 className="text-3xl text-gray-900 font-medium">Sign in</h2>
-          <p className="text-sm text-gray-500/90 mt-3">
+          <p className="text-sm text-gray-500/90 mt-3 mb-6">
             Welcome back! Please sign in to continue
           </p>
-
-          <div className="flex items-center gap-4 w-full my-5">
-            <div className="w-full h-px bg-gray-300/90"></div>
-            <p className="w-full text-nowrap text-sm text-gray-500/90">
-              Sign in with email
-            </p>
-            <div className="w-full h-px bg-gray-300/90"></div>
-          </div>
 
           <div className="flex items-center w-full bg-transparent border border-gray-300/60 h-12 rounded-full overflow-hidden pl-6 gap-2">
             <IoMail size={20} color="#6B7280" />

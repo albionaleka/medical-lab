@@ -3,12 +3,12 @@ import { GiTestTubes } from "react-icons/gi";
 
 const Main = () => {
   return (
-    <section className="min-h-screen bg-gradient-to-br from-[#f5f7ff] via-white to-[#eef2ff] flex items-center">
-      <div className="container mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <section className="min-h-screen bg-gradient-to-br from-blue-100 via-white to-indigo-100 flex items-center">
+      <div className="container mx-auto px-6 mt-30 md:mt-20 lg:mt-6 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div>
-          <div className="flex items-center align-middle gap-2 mb-4">
-            <GiTestTubes size={20} className="text-blue-600" />
-            <p className="text-sm text-blue-600 font-medium">
+          <div className="flex items-center align-middle gap-2 mb-4 pt-2 pb-2 pl-6 pr-6 rounded-full bg-blue-100/50 w-max border border-blue-200">
+            <GiTestTubes size={18} className="text-blue-800" />
+            <p className="text-sm text-blue-700 font-medium">
               Perfect for medical laboratories
             </p>
           </div>
@@ -26,14 +26,14 @@ const Main = () => {
           </p>
 
           <a href="/login">
-            <button className="px-6 py-3 rounded-full bg-blue-600 text-white font-medium hover:bg-indigo-700 transition">
+            <button className="px-6 py-3 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 transition">
               Get Started
             </button>
           </a>
         </div>
 
         <div className="relative flex justify-center hero-image">
-          <div className="w-80 h-80 md:w-[420px] md:h-[420px] rounded-full bg-gradient-to-tr from-pink-200 via-indigo-200 to-blue-200 flex items-center justify-center shadow-xl">
+          <div className="w-80 h-80 md:w-[420px] md:h-[420px] rounded-full bg-gradient-to-tr from-blue-200 via-indigo-200 to-green-200 flex items-center justify-center shadow-xl">
             <img
               src={laboratory}
               alt="Medical Illustration"
