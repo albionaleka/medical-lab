@@ -67,3 +67,10 @@ DELIMITER ;
 USE medicalLab;
 ALTER TABLE users
 ADD UNIQUE INDEX unique_email (email);
+
+USE medicalLab;
+ALTER TABLE patients
+  MODIFY email VARCHAR(100) NOT NULL,
+  MODIFY phone VARCHAR(20) NOT NULL,
+  ADD personal_number VARCHAR(20) NOT NULL;
+
