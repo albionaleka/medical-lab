@@ -40,6 +40,23 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const register = async (email, password, role) => {
+    try {
+      setLoading(true);
+      const { data } = await api.post("/api/auth/register", {
+        email,
+        password,
+        role,
+      });
+      toast.success(data.message);
+    } catch (error) {
+      toast.error(error.response?.data?.error || "Registration failed");
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const sendResetOtp = async (email) => {
     try {
       setLoading(true);
@@ -58,6 +75,7 @@ const AuthProvider = ({ children }) => {
     token,
     loading,
     login,
+    register,
     sendResetOtp,
   };
 
