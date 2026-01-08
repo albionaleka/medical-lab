@@ -127,4 +127,13 @@ export class UserService {
 
     return user;
   }
+
+  static async getAllUsers() {
+    const users = await User.findAll({
+      attributes: {
+        exclude: ["passwordHash", "reset_otp", "reset_otp_expires_at"],
+      },
+    });
+    return users;
+  }
 }

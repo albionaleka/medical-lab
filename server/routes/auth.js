@@ -78,4 +78,12 @@ router.get("/me", authenticate, async (req, res) => {
   }
 });
 
+router.get("/", authenticate, authorize("ADMIN"), async (req, res) => {
+  try {
+    const users = await UserService.getAllUsers();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 export default router;
