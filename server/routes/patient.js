@@ -64,4 +64,14 @@ router.put("/:id", authenticate, async (req, res) => {
   }
 });
 
+router.delete("/:id", authenticate, async (req, res) => {
+  try {
+    const patientId = req.params.id;
+    await PatientService.deletePatient(patientId);
+    res.status(200).json({ message: "Patient deleted successfully" });
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+});
+
 export default router;

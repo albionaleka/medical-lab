@@ -47,4 +47,14 @@ export class PatientService {
     await patient.update(updateData);
     return patient;
   }
+
+  static async deletePatient(patientId) {
+    const patient = await Patient.findByPk(patientId);
+    if (!patient) {
+      throw new Error("Patient not found");
+    }
+
+    await patient.destroy();
+    return true;
+  }
 }
