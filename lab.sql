@@ -73,4 +73,11 @@ ALTER TABLE patients
   MODIFY email VARCHAR(100) NOT NULL,
   MODIFY phone VARCHAR(20) NOT NULL,
   ADD personal_number VARCHAR(20) NOT NULL;
+  
+USE medicalLab;
+CREATE TABLE test_categories (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
+  description TEXT
+);
 
