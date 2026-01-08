@@ -86,4 +86,17 @@ router.get("/", authenticate, authorize("ADMIN"), async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+router.delete("/:id", authenticate, async (req, res) => {
+  try {
+    const targetUserId = Number(req.params.id);
+    const requester = req.user;
+
+    const result = await UserService.deleteUser(targetUserId, requester);
+    res.json(result);
+  } catch (error) {
+    res.status(403).json({ error: error.message });
+  }
+});
+
 export default router;

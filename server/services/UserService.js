@@ -136,4 +136,22 @@ export class UserService {
     });
     return users;
   }
+
+  static async deleteUser(targetUserId, requester) {
+    const user = await User.findByPk(targetUserId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const isAdmin = requester.role === "ADMIN";
+    const isSelf = requester.id === targetUserId;
+
+    if (!isAdmin && !isSelf) {
+      throw new Error("You are not allowed to delete this user");
+    }
+
+    await user.destroy();
+    return { message: "User deleted successfully" };
+  }
 }
