@@ -1,6 +1,6 @@
 import express from "express";
 import { UserService } from "../services/UserService.js";
-import { authenticate } from "../middleware/auth.js";
+import { authenticate, authorize } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -75,6 +75,27 @@ router.get("/me", authenticate, async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({ error: error.message });
+  }
+});
+
+router.get("/", authenticate, authorize("ADMIN"), async (req, res) => {
+  try {
+    const users = await UserService.getAllUsers();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.delete("/:id", authenticate, async (req, res) => {
+  try {
+    const targetUserId = Number(req.params.id);
+    const requester = req.user;
+
+    const result = await UserService.deleteUser(targetUserId, requester);
+    res.json(result);
+  } catch (error) {
+    res.status(403).json({ error: error.message });
   }
 });
 
