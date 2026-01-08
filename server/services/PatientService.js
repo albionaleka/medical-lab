@@ -37,4 +37,14 @@ export class PatientService {
     const patients = await Patient.findAll();
     return patients;
   }
+
+  static async updatePatient(patientId, updateData) {
+    const patient = await Patient.findByPk(patientId);
+    if (!patient) {
+      throw new Error("Patient not found");
+    }
+
+    await patient.update(updateData);
+    return patient;
+  }
 }
