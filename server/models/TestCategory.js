@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/database";
+import sequelize from "../config/database.js";
 
 const TestCategory = sequelize.define(
   "TestCategory",
@@ -21,7 +21,7 @@ const TestCategory = sequelize.define(
   },
   {
     tableName: "test_categories",
-    timestamps: true,
+    timestamps: false,
   }
 );
 
