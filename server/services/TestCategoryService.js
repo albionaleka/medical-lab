@@ -9,6 +9,10 @@ class TestCategoryService {
     const category = await TestCategory.create({ name, description });
     return category;
   }
+
+  static async getAllCategories() {
+    return await TestCategory.findAll();
+  }
 }
 
 export { TestCategoryService };
