@@ -55,4 +55,14 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+router.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    await TestCategoryService.deleteCategory(id);
+    res.json({ message: "Category deleted successfully" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 export default router;

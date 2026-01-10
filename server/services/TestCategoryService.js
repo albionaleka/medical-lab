@@ -26,6 +26,15 @@ class TestCategoryService {
     await category.update(updates);
     return category;
   }
+
+  static async deleteCategory(id) {
+    const category = await TestCategory.findByPk(id);
+    if (!category) {
+      throw new Error("Category not found");
+    }
+    await category.destroy();
+    return true;
+  }
 }
 
 export { TestCategoryService };
