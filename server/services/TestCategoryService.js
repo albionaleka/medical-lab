@@ -1,12 +1,12 @@
 import TestCategory from "../models/TestCategory.js";
 
 class TestCategoryService {
-  static async createCategory(name, description) {
+  static async createCategory(name, description, price) {
     const existingCategory = await TestCategory.findOne({ where: { name } });
     if (existingCategory) {
       throw new Error("Test category with this name already exists");
     }
-    const category = await TestCategory.create({ name, description });
+    const category = await TestCategory.create({ name, description, price });
     return category;
   }
 

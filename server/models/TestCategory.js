@@ -18,6 +18,10 @@ const TestCategory = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: true,
     },
+    price: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: true,
+    },
   },
   {
     tableName: "test_categories",
