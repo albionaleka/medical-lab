@@ -81,3 +81,6 @@ CREATE TABLE test_categories (
   description TEXT
 );
 
+USE medicalLab;
+ALTER TABLE test_categories
+	ADD COLUMN price DECIMAL(10,2) NOT NULL DEFAULT 15.00;
