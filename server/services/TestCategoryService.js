@@ -17,6 +17,15 @@ class TestCategoryService {
   static async getCategoryById(id) {
     return await TestCategory.findByPk(id);
   }
+
+  static async updateCategory(id, updates) {
+    const category = await TestCategory.findByPk(id);
+    if (!category) {
+      throw new Error("Category not found");
+    }
+    await category.update(updates);
+    return category;
+  }
 }
 
 export { TestCategoryService };

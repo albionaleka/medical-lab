@@ -41,4 +41,18 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updates = req.body;
+    const updatedCategory = await TestCategoryService.updateCategory(
+      id,
+      updates
+    );
+    res.json(updatedCategory);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 export default router;
