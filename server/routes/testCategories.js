@@ -28,4 +28,17 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const category = await TestCategoryService.getCategoryById(id);
+    if (!category) {
+      return res.status(404).json({ error: "Category not found" });
+    }
+    res.json(category);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 export default router;

@@ -13,6 +13,10 @@ class TestCategoryService {
   static async getAllCategories() {
     return await TestCategory.findAll();
   }
+
+  static async getCategoryById(id) {
+    return await TestCategory.findByPk(id);
+  }
 }
 
 export { TestCategoryService };
