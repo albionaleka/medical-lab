@@ -93,3 +93,13 @@ CREATE TABLE test_panels (
   description TEXT,
   FOREIGN KEY (category_id) REFERENCES test_categories(id)
 );
+
+USE medicalLab;
+CREATE TABLE test_parameters (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  panel_id INT NOT NULL,
+  name VARCHAR(50) NOT NULL,
+  unit VARCHAR(20),
+  FOREIGN KEY (panel_id) REFERENCES test_panels(id)
+);
+
