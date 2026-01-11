@@ -4,6 +4,7 @@ import Login from "./views/Login";
 import SendResetOtp from "./views/SendResetOtp";
 import Register from "./views/Register";
 import GetStarted from "./views/GetStarted";
+import Dashboard from "./views/Dashboard";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/forgot-password" element={<SendResetOtp />} />
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </>
   );
