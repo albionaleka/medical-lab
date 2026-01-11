@@ -103,3 +103,17 @@ CREATE TABLE test_parameters (
   FOREIGN KEY (panel_id) REFERENCES test_panels(id)
 );
 
+USE medicalLab;
+CREATE TABLE test_results (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  patient_id INT NOT NULL,
+  panel_id INT NOT NULL,
+  tested_at DATE NOT NULL,
+  created_by INT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (patient_id) REFERENCES patients(id),
+  FOREIGN KEY (panel_id) REFERENCES test_panels(id),
+  FOREIGN KEY (created_by) REFERENCES users(id)
+);
+
+
