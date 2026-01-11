@@ -84,3 +84,12 @@ CREATE TABLE test_categories (
 USE medicalLab;
 ALTER TABLE test_categories
 	ADD COLUMN price DECIMAL(10,2) NOT NULL DEFAULT 15.00;
+    
+USE medicalLab;
+CREATE TABLE test_panels (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  category_id INT NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  description TEXT,
+  FOREIGN KEY (category_id) REFERENCES test_categories(id)
+);
