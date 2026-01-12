@@ -2,6 +2,7 @@ import { TbLayoutDashboard } from "react-icons/tb";
 import { FaUsers, FaUser } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
+import { IoLogOutOutline } from "react-icons/io5";
 
 const menu = [
   { label: "Dashboard", icon: TbLayoutDashboard, path: "/dashboard" },
@@ -53,6 +54,19 @@ export default function Sidebar({ open, setOpen }) {
           </NavLink>
         ))}
       </nav>
+
+      <div className="py-6 px-4 space-y-2">
+        <NavLink
+          key="logout"
+          to="/logout"
+          className="
+              flex items-center gap-3 w-full px-4 py-3 rounded-xl font-medium transition-all duration-200
+              text-gray-500 hover:bg-gray-100 hover:text-blue-500"
+        >
+          <IoLogOutOutline size={20} />
+          <span>Logout</span>
+        </NavLink>
+      </div>
     </aside>
   );
 }
