@@ -53,8 +53,6 @@ export default function Sidebar({ open, setOpen }) {
           </NavLink>
         ))}
       </nav>
-
-      {/* Optional: Add a profile or extra section at bottom if needed later, keeping it clean for now */}
     </aside>
   );
 }
