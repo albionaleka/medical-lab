@@ -24,6 +24,7 @@ const TestPanel = sequelize.define(
   },
   {
     tableName: "test_panels",
+    underscored: true,
     timestamps: false,
   }
 );

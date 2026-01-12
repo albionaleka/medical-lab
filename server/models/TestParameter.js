@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/database.js";
 
-const TestCategory = sequelize.define(
-  "TestCategory",
+const TestParameter = sequelize.define(
+  "TestParameter",
   {
     id: {
       type: DataTypes.INTEGER,
@@ -12,22 +12,21 @@ const TestCategory = sequelize.define(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
     },
-    description: {
-      type: DataTypes.TEXT,
+    unit: {
+      type: DataTypes.STRING,
       allowNull: true,
     },
-    price: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: true,
+    panelId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
   },
   {
-    tableName: "test_categories",
+    tableName: "test_parameters",
     underscored: true,
     timestamps: false,
   }
 );
 
-export default TestCategory;
+export default TestParameter;
