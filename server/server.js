@@ -6,6 +6,7 @@ import authRoutes from "./routes/auth.js";
 import profileRoutes from "./routes/profile.js";
 import patientRoutes from "./routes/patient.js";
 import testCategoryRoutes from "./routes/testCategories.js";
+import testRoutes from "./routes/tests.js";
 import "./models/index.js";
 
 dotenv.config();
@@ -30,6 +31,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/patient", patientRoutes);
 app.use("/api/categories", testCategoryRoutes);
+app.use("/api/tests", testRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
