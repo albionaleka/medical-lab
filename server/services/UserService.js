@@ -92,7 +92,6 @@ export class UserService {
 
   static async resetPassword(email, otp, newPassword) {
     const user = await User.findOne({ where: { email } });
-    console.log(user);
 
     if (!user) {
       throw new Error("User with this email does not exist");
@@ -111,7 +110,7 @@ export class UserService {
     user.reset_otp_expires_at = null;
     await user.save();
 
-    return { user, message: "Password has been reset successfully" };
+    return { user: { attributes: { exclude: ["passwordHash", "reset_otp", "reset_otp_expires_at"] } }, message: "Password has been reset successfully" };
   }
 
   static async getUserById(id) {

@@ -1,0 +1,66 @@
+import { TestCategoryService } from "../services/TestCategoryService.js";
+
+export const TestCategoryController = {
+    async createCategory(req, res) {
+        try {
+            const { name, description, price } = req.body;
+            if (!name) {
+                return res.status(400).json({ error: "Name is required" });
+            }
+            const category = await TestCategoryService.createCategory(
+                name,
+                description,
+                price
+            );
+            res.status(201).json(category);
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    },
+
+    async getAllCategories(req, res) {
+        try {
+            const categories = await TestCategoryService.getAllCategories();
+            res.json(categories);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+
+    async getCategoryById(req, res) {
+        try {
+            const { id } = req.params;
+            const category = await TestCategoryService.getCategoryById(id);
+            if (!category) {
+                return res.status(404).json({ error: "Category not found" });
+            }
+            res.json(category);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+
+    async updateCategory(req, res) {
+        try {
+            const { id } = req.params;
+            const updates = req.body;
+            const updatedCategory = await TestCategoryService.updateCategory(
+                id,
+                updates
+            );
+            res.json(updatedCategory);
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    },
+
+    async deleteCategory(req, res) {
+        try {
+            const { id } = req.params;
+            await TestCategoryService.deleteCategory(id);
+            res.json({ message: "Category deleted successfully" });
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    },
+};

@@ -1,0 +1,73 @@
+import { PatientService } from "../services/PatientService.js";
+
+export const PatientController = {
+    async createPatient(req, res) {
+        try {
+            const {
+                personalNumber,
+                firstName,
+                lastName,
+                birthday,
+                gender,
+                phone,
+                email,
+            } = req.body;
+
+            const newPatient = await PatientService.createPatient({
+                personalNumber,
+                firstName,
+                lastName,
+                birthday,
+                gender,
+                phone,
+                email,
+            });
+            res.status(201).json(newPatient);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+
+    async getPatientById(req, res) {
+        try {
+            const patientId = req.params.id;
+            const patient = await PatientService.getPatientById(patientId);
+            res.json(patient);
+        } catch (error) {
+            res.status(404).json({ error: error.message });
+        }
+    },
+
+    async getAllPatients(req, res) {
+        try {
+            const patients = await PatientService.getAllPatients();
+            res.json(patients);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+
+    async updatePatient(req, res) {
+        try {
+            const patientId = req.params.id;
+            const updateData = req.body;
+            const updatedPatient = await PatientService.updatePatient(
+                patientId,
+                updateData
+            );
+            res.json(updatedPatient);
+        } catch (error) {
+            res.status(404).json({ error: error.message });
+        }
+    },
+
+    async deletePatient(req, res) {
+        try {
+            const patientId = req.params.id;
+            await PatientService.deletePatient(patientId);
+            res.status(200).json({ message: "Patient deleted successfully" });
+        } catch (error) {
+            res.status(404).json({ error: error.message });
+        }
+    },
+};
