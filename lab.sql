@@ -125,3 +125,14 @@ CREATE TABLE reference_ranges (
   normal_max DECIMAL(8,2),
   FOREIGN KEY (parameter_id) REFERENCES test_parameters(id)
 );
+
+USE medicalLab;
+CREATE TABLE test_result_values (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  test_result_id INT NOT NULL,
+  parameter_id INT NOT NULL,
+  result_value DECIMAL(8,2),
+  result_status ENUM('LOW', 'NORMAL', 'HIGH'),
+  FOREIGN KEY (test_result_id) REFERENCES test_results(id),
+  FOREIGN KEY (parameter_id) REFERENCES test_parameters(id)
+);
