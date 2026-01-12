@@ -116,4 +116,12 @@ CREATE TABLE test_results (
   FOREIGN KEY (created_by) REFERENCES users(id)
 );
 
-
+USE medicalLab;
+CREATE TABLE reference_ranges (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  parameter_id INT NOT NULL,
+  gender ENUM('MALE', 'FEMALE', 'OTHER'),
+  normal_min DECIMAL(8,2),
+  normal_max DECIMAL(8,2),
+  FOREIGN KEY (parameter_id) REFERENCES test_parameters(id)
+);
