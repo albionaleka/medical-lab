@@ -5,6 +5,7 @@ import SendResetOtp from "./views/SendResetOtp";
 import Register from "./views/Register";
 import GetStarted from "./views/GetStarted";
 import Dashboard from "./views/Dashboard";
+import Profile from "./views/Profile";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </>
   );
