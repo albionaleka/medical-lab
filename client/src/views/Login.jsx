@@ -13,6 +13,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await login(formData.email, formData.password);
+    if (localStorage.getItem("token")) {
+      window.location.href = "/dashboard";
+    }
   };
 
   const onChange = (e) => {
