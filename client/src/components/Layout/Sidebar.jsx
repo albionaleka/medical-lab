@@ -3,6 +3,8 @@ import { FaUsers, FaUser } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 import { IoLogOutOutline } from "react-icons/io5";
+import { AuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
 
 const menu = [
   { label: "Dashboard", icon: TbLayoutDashboard, path: "/dashboard" },
@@ -11,6 +13,13 @@ const menu = [
 ];
 
 export default function Sidebar({ open, setOpen }) {
+  const { logout } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    logout();
+    window.location.href = "/login";
+  };
+
   return (
     <aside
       className={`
@@ -56,16 +65,15 @@ export default function Sidebar({ open, setOpen }) {
       </nav>
 
       <div className="py-6 px-4 space-y-2">
-        <NavLink
-          key="logout"
-          to="/logout"
+        <button
           className="
               flex items-center gap-3 w-full px-4 py-3 rounded-xl font-medium transition-all duration-200
               text-gray-500 hover:bg-gray-100 hover:text-blue-500"
+          onClick={handleLogout}
         >
           <IoLogOutOutline size={20} />
           <span>Logout</span>
-        </NavLink>
+        </button>
       </div>
     </aside>
   );
