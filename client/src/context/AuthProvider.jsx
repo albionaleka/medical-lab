@@ -31,6 +31,7 @@ const AuthProvider = ({ children }) => {
       setIsLoggedin(true);
       setToken(data.token);
       localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
       toast.success("Login successful");
     } catch (error) {
       toast.error(error.response?.data?.error || "Login failed");
@@ -70,6 +71,13 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const logout = () => {
+    setIsLoggedin(false);
+    setToken(null);
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+  };
+
   const value = {
     loggedIn,
     token,
@@ -77,6 +85,7 @@ const AuthProvider = ({ children }) => {
     login,
     register,
     sendResetOtp,
+    logout,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
