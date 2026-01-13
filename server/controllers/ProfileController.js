@@ -6,7 +6,7 @@ export const ProfileController = {
             const {
                 firstName,
                 lastName,
-                birthDate,
+                birthday,
                 address,
                 phone,
                 jobTitle,
@@ -17,12 +17,13 @@ export const ProfileController = {
                 userId,
                 firstName,
                 lastName,
-                birthDate,
+                birthday,
                 address,
                 phone,
                 jobTitle,
                 profileImage
             );
+            
             res.json(profile);
         } catch (error) {
             res.status(400).json({ error: error.message });
