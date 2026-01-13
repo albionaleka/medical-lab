@@ -51,7 +51,7 @@ export const Profile = sequelize.define(
     },
 
     profileImage: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.TEXT("long"),
       allowNull: true,
     },
   },
