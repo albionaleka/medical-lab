@@ -2,6 +2,7 @@ import { AuthContext } from "../context/AuthContext";
 import { useContext, useState } from "react";
 import { IoMail } from "react-icons/io5";
 import { IoIosLock } from "react-icons/io";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const { register } = useContext(AuthContext);
@@ -13,9 +14,14 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    await register(formData.email, formData.password, formData.role);
+    try {
+      await register(formData.email, formData.password, formData.role);
+      window.location.href = '/dashboard';
+    } catch (error) {
+      toast.error(error.message || 'Registration failed');
+    }
   };
+
 
   const onChange = (e) => {
     setFormData({
@@ -80,7 +86,6 @@ const Register = () => {
 
           <button
             type="submit"
-            onClick={handleSubmit}
             className="mt-8 w-full h-11 rounded-full text-white bg-indigo-500 hover:opacity-90 transition-opacity"
           >
             Register
