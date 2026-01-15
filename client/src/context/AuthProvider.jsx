@@ -4,11 +4,21 @@ import { toast } from "react-toastify";
 import { AuthContext } from "./AuthContext";
 
 const AuthProvider = ({ children }) => {
-  const [loggedIn, setIsLoggedin] = useState(false);
-  const [token, setToken] = useState(localStorage.getItem("token"));
-  const [loading, setLoading] = useState(true);
+  const storedToken = localStorage.getItem("token");
+  const storedUser = localStorage.getItem("user");
+  
+  const [loggedIn, setIsLoggedin] = useState(!!(storedToken && storedUser));
+  const [token, setToken] = useState(storedToken);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+    if (token && user) {
+      setIsLoggedin(true);
+      setToken(token);
+    }
+
     const interceptor = api.interceptors.response.use(
       (response) => response,
       (error) => {
@@ -16,6 +26,7 @@ const AuthProvider = ({ children }) => {
           setIsLoggedin(false);
           setToken(null);
           localStorage.removeItem("token");
+          localStorage.removeItem("user");
         }
         return Promise.reject(error);
       }
