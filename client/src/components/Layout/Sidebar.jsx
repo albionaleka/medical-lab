@@ -1,19 +1,53 @@
 import { TbLayoutDashboard } from "react-icons/tb";
-import { FaUsers, FaUser } from "react-icons/fa";
+import { FaUsers, FaUser, FaFlask, FaFileMedical } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 import { IoLogOutOutline } from "react-icons/io5";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
+import { ROLES, hasPermission } from "../../utils/roles";
 
-const menu = [
-  { label: "Dashboard", icon: TbLayoutDashboard, path: "/dashboard" },
-  { label: "Patients", icon: FaUsers, path: "/patients" },
-  { label: "Users", icon: FaUser, path: "/users" },
+const allMenuItems = [
+  {
+    label: "Dashboard",
+    icon: TbLayoutDashboard,
+    path: "/dashboard",
+    roles: [ROLES.ADMIN, ROLES.DOCTOR, ROLES.LABORANT],
+  },
+  {
+    label: "Patients",
+    icon: FaUsers,
+    path: "/patients",
+    roles: [ROLES.ADMIN, ROLES.DOCTOR, ROLES.LABORANT],
+  },
+  {
+    label: "Test Results",
+    icon: FaFileMedical,
+    path: "/test-results",
+    roles: [ROLES.ADMIN, ROLES.DOCTOR, ROLES.LABORANT],
+  },
+  {
+    label: "Test Categories",
+    icon: FaFlask,
+    path: "/categories",
+    roles: [ROLES.ADMIN, ROLES.DOCTOR, ROLES.LABORANT],
+  },
+  { label: "Users", icon: FaUser, path: "/users", roles: [ROLES.ADMIN] },
+  {
+    label: "Profile",
+    icon: FaUser,
+    path: "/profile",
+    roles: [ROLES.ADMIN, ROLES.DOCTOR, ROLES.LABORANT],
+  },
 ];
 
 export default function Sidebar({ open, setOpen }) {
   const { logout } = useContext(AuthContext);
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+
+  const menu = allMenuItems.filter(
+    (item) => user && item.roles.includes(user.role)
+  );
 
   const handleLogout = () => {
     logout();
