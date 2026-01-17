@@ -6,6 +6,8 @@ import Register from "./views/Register";
 import GetStarted from "./views/GetStarted";
 import Dashboard from "./views/Dashboard";
 import Profile from "./views/Profile";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { ROLES } from "./utils/roles";
 
 function App() {
   return (
@@ -16,8 +18,23 @@ function App() {
         <Route path="/forgot-password" element={<SendResetOtp />} />
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/profile" element={<Profile />} />
+
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </>
   );
