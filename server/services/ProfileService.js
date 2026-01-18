@@ -10,7 +10,7 @@ export class ProfileService {
     address,
     phone,
     jobTitle,
-    profileImage
+    profileImage,
   ) {
     const profile = await Profile.findOne({ where: { userId } });
 
@@ -59,5 +59,19 @@ export class ProfileService {
       throw new Error("Profile not found");
     }
     return profile;
+  }
+
+  static async getAllProfiles() {
+    return await Profile.findAll({
+      include: [
+        {
+          model: User,
+          as: "user",
+          attributes: {
+            exclude: ["passwordHash", "reset_otp", "reset_otp_expires_at"],
+          },
+        },
+      ],
+    });
   }
 }
