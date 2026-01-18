@@ -7,7 +7,7 @@ import GetStarted from "./views/GetStarted";
 import Dashboard from "./views/Dashboard";
 import Profile from "./views/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { ROLES } from "./utils/roles";
+import UsersPage from "./views/UsersPage";
 
 function App() {
   return (
@@ -32,6 +32,15 @@ function App() {
           element={
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute>
+              <UsersPage />
             </ProtectedRoute>
           }
         />
