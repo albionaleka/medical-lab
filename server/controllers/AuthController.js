@@ -95,4 +95,17 @@ export const AuthController = {
             res.status(403).json({ error: error.message });
         }
     },
+
+    async updateUser(req, res) {
+        try {
+            const targetUserId = Number(req.params.id);
+            const requester = req.user;
+            const updates = req.body;
+
+            const result = await UserService.updateUser(targetUserId, updates, requester);
+            res.json(result);
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    },
 };

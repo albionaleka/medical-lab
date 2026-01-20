@@ -152,4 +152,43 @@ export class UserService {
     await user.destroy();
     return { message: "User deleted successfully" };
   }
+
+  static async updateUser(targetUserId, updates, requester) {
+    const user = await User.findByPk(targetUserId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const isAdmin = requester.role === "ADMIN";
+    // Only admin can update other users (or role)
+    if (!isAdmin) {
+      throw new Error("You are not allowed to update this user");
+    }
+
+    // If updating email, check for duplicates
+    if (updates.email && updates.email !== user.email) {
+      const existingUser = await User.findOne({ where: { email: updates.email } });
+      if (existingUser) {
+        throw new Error("User with this email already exists");
+      }
+    }
+
+    if (updates.email) user.email = updates.email;
+    if (updates.role) user.role = updates.role;
+
+    // Check if password update is requested (optional, but good to have)
+    if (updates.password) {
+      const passwordHash = await bcrypt.hash(updates.password, SALT);
+      user.passwordHash = passwordHash;
+    }
+
+    await user.save();
+
+    return {
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    };
+  }
 }

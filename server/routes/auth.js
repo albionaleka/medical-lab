@@ -11,5 +11,6 @@ router.post("/reset-password", AuthController.resetPassword);
 router.get("/me", authenticate, AuthController.getMe);
 router.get("/", authenticate, authorize("ADMIN"), AuthController.getAllUsers);
 router.delete("/:id", authenticate, AuthController.deleteUser);
+router.put("/:id", authenticate, authorize("ADMIN"), AuthController.updateUser);
 
 export default router;
