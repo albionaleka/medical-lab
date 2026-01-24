@@ -52,4 +52,35 @@ export const ProfileController = {
       res.status(500).json({ error: error.message });
     }
   },
+
+
+  async updateUserProfile(req, res) {
+    try {
+      const userId = Number(req.params.id);
+      const {
+        firstName,
+        lastName,
+        birthday,
+        address,
+        phone,
+        jobTitle,
+        profileImage,
+      } = req.body;
+
+      const profile = await ProfileService.createOrUpdateProfile(
+        userId,
+        firstName,
+        lastName,
+        birthday,
+        address,
+        phone,
+        jobTitle,
+        profileImage,
+      );
+
+      res.json(profile);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
 };

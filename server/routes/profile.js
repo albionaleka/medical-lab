@@ -12,5 +12,11 @@ router.get(
   authorize("ADMIN"),
   ProfileController.getAllProfiles,
 );
+router.put(
+  "/:id",
+  authenticate,
+  authorize("ADMIN"),
+  ProfileController.updateUserProfile,
+);
 
 export default router;
