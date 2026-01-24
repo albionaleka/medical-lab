@@ -169,7 +169,7 @@ const Patients = () => {
                                                 <span className="md:hidden font-semibold text-gray-500">
                                                     Gender:
                                                 </span>
-                                                {patient.gender === "M" ? "Male" : "Female"}
+                                                {patient.gender === "MALE" ? "Male" : "Female"}
                                             </td>
                                             <td className="px-6 py-4 md:whitespace-nowrap text-sm text-gray-500 block md:table-cell flex justify-between md:block">
                                                 <span className="md:hidden font-semibold text-gray-500">
