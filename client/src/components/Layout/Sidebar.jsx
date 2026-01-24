@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import { IoLogOutOutline } from "react-icons/io5";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
-import { ROLES, hasPermission } from "../../utils/roles";
+import { ROLES } from "../../utils/roles";
 
 const allMenuItems = [
   {
@@ -32,7 +32,7 @@ const allMenuItems = [
     path: "/categories",
     roles: [ROLES.ADMIN, ROLES.DOCTOR, ROLES.LABORANT],
   },
-  { label: "Users", icon: FaUser, path: "/users", roles: [ROLES.ADMIN] },
+  { label: "Users", icon: FaUsers, path: "/users", roles: [ROLES.ADMIN] },
   {
     label: "Profile",
     icon: FaUser,
@@ -85,10 +85,9 @@ export default function Sidebar({ open, setOpen }) {
             to={path}
             className={({ isActive }) => `
               flex items-center gap-3 w-full px-4 py-3 rounded-xl font-medium transition-all duration-200
-              ${
-                isActive
-                  ? "bg-blue-500 text-white"
-                  : "text-gray-500 hover:bg-gray-50 hover:text-blue-500"
+              ${isActive
+                ? "bg-blue-500 text-white"
+                : "text-gray-500 hover:bg-gray-50 hover:text-blue-500"
               }
             `}
           >
