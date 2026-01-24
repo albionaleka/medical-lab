@@ -8,6 +8,7 @@ import Dashboard from "./views/Dashboard";
 import Profile from "./views/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import UsersPage from "./views/UsersPage";
+import PatientsPage from "./views/PatientsPage";
 
 function App() {
   return (
@@ -41,6 +42,15 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={["ADMIN"]}>
               <UsersPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/patients"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN"]}>
+              <PatientsPage />
             </ProtectedRoute>
           }
         />
