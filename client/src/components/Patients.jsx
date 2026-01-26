@@ -1,10 +1,12 @@
 import api from "../api/axios";
 import { useEffect, useState } from "react";
-import { FaPlus, FaSearch, FaEdit, FaTrash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { FaPlus, FaSearch, FaEdit, FaTrash, FaEye } from "react-icons/fa";
 import CreatePatientModal from "./CreatePatientModal";
 import EditPatientModal from "./EditPatientModal";
 
 const Patients = () => {
+    const navigate = useNavigate();
     const [patients, setPatients] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
@@ -151,6 +153,7 @@ const Patients = () => {
                                     return (
                                         <tr
                                             key={patient.id}
+                                            onClick={() => navigate(`/patients/${patient.id}`)}
                                             className="hover:bg-gray-50 transition-colors block md:table-row border-b md:border-b-0"
                                         >
                                             <td className="px-6 py-4 md:whitespace-nowrap text-sm text-gray-900 font-medium block md:table-cell flex justify-between md:block">
@@ -193,6 +196,13 @@ const Patients = () => {
                                                     Actions:
                                                 </span>
                                                 <div className="flex justify-end space-x-2">
+                                                    {/* <button
+                                                        onClick={() => navigate(`/patients/${patient.id}`)}
+                                                        className="bg-green-500 text-white p-2 rounded-lg hover:bg-green-600 transition-all shadow-sm hover:shadow-md"
+                                                        title="View Details"
+                                                    >
+                                                        <FaEye className="w-4 h-4" />
+                                                    </button> */}
                                                     <button
                                                         onClick={() => handleEdit(patient)}
                                                         className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition-all shadow-sm hover:shadow-md"
