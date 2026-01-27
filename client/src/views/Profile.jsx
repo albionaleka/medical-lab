@@ -77,6 +77,11 @@ const Profile = () => {
         jobTitle: formData.jobTitle,
         profileImage: formData.profileImage,
       };
+
+      if (!payload.birthday) {
+        payload.birthday = null;
+      }
+
       await api.post("/api/profile", payload);
       toast.success("Profile saved successfully");
     } catch (error) {
@@ -141,7 +146,7 @@ const Profile = () => {
                 <input
                   type="date"
                   name="birthday"
-                  value={formData.birthday ? formData.birthday.substring(0,10) : ""}
+                  value={formData.birthday ? formData.birthday.substring(0, 10) : ""}
                   onChange={handleChange}
                   className="w-full rounded-lg border px-4 py-2.5 bg-gray-50 text-gray-800 focus:border-blue-500 focus:bg-white focus:outline-none"
                 />
