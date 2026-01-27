@@ -23,4 +23,14 @@ export const TestPanelController = {
             res.status(400).json({ error: error.message });
         }
     },
+
+    async getTestPanels(req, res) {
+        try {
+            const { categoryId } = req.query;
+            const panels = await TestPanelService.getAllTestPanels(categoryId);
+            res.json(panels);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
 };

@@ -68,4 +68,23 @@ export const TestPanelService = {
             ],
         });
     },
+
+    async getAllTestPanels(categoryId = null) {
+        const whereClause = categoryId ? { categoryId } : {};
+        return await TestPanel.findAll({
+            where: whereClause,
+            include: [
+                {
+                    model: TestParameter,
+                    as: "parameters",
+                    include: [
+                        {
+                            model: ReferenceRanges,
+                            as: "referenceRanges",
+                        },
+                    ],
+                },
+            ],
+        });
+    },
 };
