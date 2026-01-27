@@ -29,7 +29,7 @@ const TestResultValues = sequelize.define(
   },
   {
     tableName: "test_result_values",
-    timestamps: true,
+    timestamps: false,
     underscored: true,
   }
 );

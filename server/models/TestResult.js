@@ -27,6 +27,8 @@ const TestResult = sequelize.define(
   {
     tableName: "test_results",
     timestamps: true,
+    createdAt: "created_at",
+    updatedAt: false,
     underscored: true,
   }
 );
