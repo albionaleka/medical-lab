@@ -17,7 +17,7 @@ export const ProfileController = {
         userId,
         firstName,
         lastName,
-        birthday,
+        birthday || null,
         address,
         phone,
         jobTitle,
