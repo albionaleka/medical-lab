@@ -109,7 +109,14 @@ export class UserService {
     user.reset_otp_expires_at = null;
     await user.save();
 
-    return { user: { attributes: { exclude: ["passwordHash", "reset_otp", "reset_otp_expires_at"] } }, message: "Password has been reset successfully" };
+    return {
+      user: {
+        attributes: {
+          exclude: ["passwordHash", "reset_otp", "reset_otp_expires_at"],
+        },
+      },
+      message: "Password has been reset successfully",
+    };
   }
 
   static async getUserById(id) {
@@ -161,15 +168,17 @@ export class UserService {
     }
 
     const isAdmin = requester.role === "ADMIN";
-    // Only admin can update other users (or role)
+
     if (!isAdmin) {
       throw new Error("You are not allowed to update this user");
     }
 
-    // If updating email, check for duplicates
-    if (updates.email && updates.email !== user.email) {
-      const existingUser = await User.findOne({ where: { email: updates.email } });
-      if (existingUser) {
+    if (updates.email) {
+      const existingUser = await User.findOne({
+        where: { email: updates.email },
+      });
+
+      if (existingUser && existingUser.id !== parseInt(targetUserId)) {
         throw new Error("User with this email already exists");
       }
     }
@@ -177,7 +186,6 @@ export class UserService {
     if (updates.email) user.email = updates.email;
     if (updates.role) user.role = updates.role;
 
-    // Check if password update is requested (optional, but good to have)
     if (updates.password) {
       const passwordHash = await bcrypt.hash(updates.password, SALT);
       user.passwordHash = passwordHash;
