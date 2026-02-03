@@ -14,7 +14,7 @@ const ReferenceRanges = sequelize.define(
       allowNull: false,
     },
     gender: {
-      type: DataTypes.ENUM("MALE", "FEMALE", "OTHER"),
+      type: DataTypes.STRING,
       allowNull: true,
     },
     normalMin: {
