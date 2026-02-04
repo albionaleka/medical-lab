@@ -1,10 +1,13 @@
 import api from "../api/axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaPlus, FaSearch, FaEdit, FaTrash } from "react-icons/fa";
 import CreateUserModal from "./CreateUserModal";
 import EditUserModal from "./EditUserModal";
+import ConfirmationModal from "./ConfirmationModal";
 
 const Users = () => {
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [profiles, setProfiles] = useState({});
   const [loading, setLoading] = useState(true);
@@ -12,24 +15,43 @@ const Users = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [userToDelete, setUserToDelete] = useState(null);
 
   const handleEdit = (userId) => {
     const user = users.find((u) => u.id === userId);
     const profile = profiles[userId];
     if (user) {
-      setEditingUser({ ...user, ...(profile || {}) });
+      setEditingUser({
+        id: user.id,
+        email: user.email,
+        role: user.role,
+        created_at: user.created_at,
+        ...(profile
+          ? {
+              firstName: profile.firstName,
+              lastName: profile.lastName,
+              profileId: profile.id,
+            }
+          : {}),
+      });
       setIsEditModalOpen(true);
     }
   };
 
-  const handleDelete = async (userId) => {
-    if (window.confirm("Are you sure you want to delete this user?")) {
-      try {
-        await api.delete(`/api/auth/${userId}`);
-        fetchUsers();
-      } catch (error) {
-        console.error("Error deleting user:", error);
-      }
+  const handleDelete = (userId) => {
+    setUserToDelete(userId);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = async () => {
+    try {
+      await api.delete(`/api/auth/${userToDelete}`);
+      fetchUsers();
+      setShowDeleteModal(false);
+      setUserToDelete(null);
+    } catch (error) {
+      console.error("Error deleting user:", error);
     }
   };
 
@@ -164,14 +186,19 @@ const Users = () => {
                   return (
                     <tr
                       key={user.id}
-                      className="hover:bg-gray-50 transition-colors block md:table-row border-b md:border-b-0"
+                      onClick={() => navigate(`/profile/${user.id}`)}
+                      className="hover:bg-gray-50 transition-colors block md:table-row border-b md:border-b-0 cursor-pointer"
                     >
                       <td className="px-6 py-4 md:whitespace-nowrap text-sm text-gray-900 font-medium block md:table-cell flex justify-between md:block">
-                        <span className="md:hidden font-semibold text-gray-500">ID:</span>
+                        <span className="md:hidden font-semibold text-gray-500">
+                          ID:
+                        </span>
                         {user.id}
                       </td>
                       <td className="px-6 py-4 md:whitespace-nowrap text-sm text-gray-900 block md:table-cell flex justify-between md:block">
-                        <span className="md:hidden font-semibold text-gray-500">Name:</span>
+                        <span className="md:hidden font-semibold text-gray-500">
+                          Name:
+                        </span>
                         {profile ? (
                           `${profile.firstName} ${profile.lastName}`
                         ) : (
@@ -179,25 +206,37 @@ const Users = () => {
                         )}
                       </td>
                       <td className="px-6 py-4 md:whitespace-nowrap text-sm text-gray-500 block md:table-cell flex justify-between md:block">
-                        <span className="md:hidden font-semibold text-gray-500">Email:</span>
+                        <span className="md:hidden font-semibold text-gray-500">
+                          Email:
+                        </span>
                         {user.email}
                       </td>
                       <td className="px-6 py-4 md:whitespace-nowrap text-sm text-gray-500 block md:table-cell flex justify-between md:block">
-                        <span className="md:hidden font-semibold text-gray-500">Created:</span>
+                        <span className="md:hidden font-semibold text-gray-500">
+                          Created:
+                        </span>
                         {createdDate}
                       </td>
                       <td className="px-6 py-4 md:whitespace-nowrap text-right text-sm font-medium block md:table-cell flex justify-between md:block items-center">
-                        <span className="md:hidden font-semibold text-gray-500">Actions:</span>
+                        <span className="md:hidden font-semibold text-gray-500">
+                          Actions:
+                        </span>
                         <div className="flex justify-end space-x-2">
                           <button
-                            onClick={() => handleEdit(user.id)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleEdit(user.id);
+                            }}
                             className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition-all shadow-sm hover:shadow-md"
                             title="Edit"
                           >
                             <FaEdit className="w-4 h-4" />
                           </button>
                           <button
-                            onClick={() => handleDelete(user.id)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDelete(user.id);
+                            }}
                             className="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 transition-all shadow-sm hover:shadow-md"
                             title="Delete"
                           >
@@ -210,7 +249,10 @@ const Users = () => {
                 })}
                 {filteredUsers.length === 0 && (
                   <tr>
-                    <td colSpan="6" className="px-6 py-12 text-center block md:table-cell">
+                    <td
+                      colSpan="6"
+                      className="px-6 py-12 text-center block md:table-cell"
+                    >
                       <div className="flex flex-col items-center justify-center">
                         <FaSearch className="text-gray-300 text-4xl mb-3" />
                         <p className="text-gray-500 text-lg font-medium">
@@ -255,6 +297,19 @@ const Users = () => {
           setEditingUser(null);
         }}
         user={editingUser}
+      />
+
+      <ConfirmationModal
+        isOpen={showDeleteModal}
+        onClose={() => {
+          setShowDeleteModal(false);
+          setUserToDelete(null);
+        }}
+        onConfirm={confirmDelete}
+        title="Delete User"
+        message="Are you sure you want to delete this user? This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
       />
     </>
   );
