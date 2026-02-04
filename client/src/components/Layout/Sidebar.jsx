@@ -27,9 +27,9 @@ const allMenuItems = [
     roles: [ROLES.ADMIN, ROLES.DOCTOR, ROLES.LABORANT],
   },
   {
-    label: "Test Categories",
+    label: "Tests",
     icon: FaFlask,
-    path: "/categories",
+    path: "/tests",
     roles: [ROLES.ADMIN, ROLES.DOCTOR, ROLES.LABORANT],
   },
   { label: "Users", icon: FaUsers, path: "/users", roles: [ROLES.ADMIN] },
