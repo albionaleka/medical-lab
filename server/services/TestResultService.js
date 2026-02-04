@@ -3,6 +3,7 @@ import {
   TestResultValues,
   TestPanel,
   TestParameter,
+  TestCategory,
   Patient,
 } from "../models/index.js";
 import sequelize from "../config/database.js";
@@ -88,6 +89,11 @@ export const TestResultService = {
           model: TestPanel,
           as: "panel",
           include: [
+            {
+              model: TestCategory,
+              as: "category",
+              attributes: ["id", "name", "price"],
+            },
             {
               model: TestParameter,
               as: "parameters",

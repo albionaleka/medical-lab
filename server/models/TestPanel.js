@@ -20,13 +20,14 @@ const TestPanel = sequelize.define(
     categoryId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      field: "category_id",
     },
   },
   {
     tableName: "test_panels",
     underscored: true,
     timestamps: false,
-  }
+  },
 );
 
 export default TestPanel;
