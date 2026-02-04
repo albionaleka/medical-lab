@@ -7,6 +7,7 @@ import profileRoutes from "./routes/profile.js";
 import patientRoutes from "./routes/patient.js";
 import testCategoryRoutes from "./routes/testCategories.js";
 import testRoutes from "./routes/tests.js";
+import testParameterRoutes from "./routes/testParameters.js";
 import testResultRoutes from "./routes/testResults.js";
 import "./models/index.js";
 
@@ -33,6 +34,7 @@ app.use("/api/profile", profileRoutes);
 app.use("/api/patient", patientRoutes);
 app.use("/api/categories", testCategoryRoutes);
 app.use("/api/tests", testRoutes);
+app.use("/api/parameters", testParameterRoutes);
 app.use("/api/test-results", testResultRoutes);
 
 app.listen(PORT, () => {

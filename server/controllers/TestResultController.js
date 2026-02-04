@@ -1,35 +1,75 @@
 import { TestResultService } from "../services/TestResultService.js";
 
 export const TestResultController = {
-    async createTestResult(req, res) {
-        try {
-            const { patientId, panelId, values } = req.body;
+  async createTestResult(req, res) {
+    try {
+      const { patientId, panelId, values } = req.body;
 
-            if (!patientId || !panelId || !values) {
-                return res
-                    .status(400)
-                    .json({ error: "Patient ID, Panel ID, and Values are required" });
-            }
+      if (!patientId || !panelId || !values) {
+        return res
+          .status(400)
+          .json({ error: "Patient ID, Panel ID, and Values are required" });
+      }
 
-            const result = await TestResultService.createTestResult({
-                patientId,
-                panelId,
-                values,
-            });
+      const result = await TestResultService.createTestResult({
+        patientId,
+        panelId,
+        values,
+      });
 
-            res.status(201).json(result);
-        } catch (error) {
-            res.status(400).json({ error: error.message });
-        }
-    },
+      res.status(201).json(result);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
 
-    async getTestResultsByPatient(req, res) {
-        try {
-            const { patientId } = req.params;
-            const results = await TestResultService.getTestResultsByPatientId(patientId);
-            res.json(results);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    },
+  async getTestResultsByPatient(req, res) {
+    try {
+      const { patientId } = req.params;
+      const results =
+        await TestResultService.getTestResultsByPatientId(patientId);
+      res.json(results);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
+  async getAllTestResults(req, res) {
+    try {
+      const results = await TestResultService.getAllTestResults();
+      res.json(results);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
+  async getTestResultById(req, res) {
+    try {
+      const { id } = req.params;
+      const result = await TestResultService.getTestResultById(id);
+
+      if (!result) {
+        return res.status(404).json({ error: "Test result not found" });
+      }
+
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
+  async deleteTestResult(req, res) {
+    try {
+      const { id } = req.params;
+      const deleted = await TestResultService.deleteTestResult(id);
+
+      if (!deleted) {
+        return res.status(404).json({ error: "Test result not found" });
+      }
+
+      res.json({ message: "Test result deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
 };
