@@ -72,4 +72,45 @@ export const TestResultController = {
       res.status(500).json({ error: error.message });
     }
   },
+
+  async updateTestResult(req, res) {
+    try {
+      const { id } = req.params;
+      const { values } = req.body;
+
+      if (!values) {
+        return res.status(400).json({ error: "Values are required" });
+      }
+
+      const result = await TestResultService.updateTestResult(id, { values });
+
+      if (!result) {
+        return res.status(404).json({ error: "Test result not found" });
+      }
+
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
+  async downloadReport(req, res) {
+    try {
+      const { id } = req.params;
+      const pdfBuffer = await TestResultService.generatePDFReport(id);
+
+      if (!pdfBuffer) {
+        return res.status(404).json({ error: "Test result not found" });
+      }
+
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename=test-result-${id}.pdf`,
+      );
+      res.send(pdfBuffer);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
 };

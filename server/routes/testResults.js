@@ -14,6 +14,8 @@ router.get(
 );
 
 router.get("/:id", authenticate, TestResultController.getTestResultById);
+router.get("/:id/download", authenticate, TestResultController.downloadReport);
+router.put("/:id", authenticate, TestResultController.updateTestResult);
 router.delete("/:id", authenticate, TestResultController.deleteTestResult);
 
 export default router;
