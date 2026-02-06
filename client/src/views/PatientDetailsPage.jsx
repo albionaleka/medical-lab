@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import Layout from "../components/Layout/Layout";
 import AddTestResultModal from "../components/Patients/AddTestResultModal";
+import EditTestResultModal from "../components/Patients/EditTestResultModal";
 import {
   FaUser,
   FaNotesMedical,
@@ -21,6 +22,8 @@ const PatientDetailsPage = () => {
   const [testResults, setTestResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isAddTestModalOpen, setIsAddTestModalOpen] = useState(false);
+  const [isEditTestModalOpen, setIsEditTestModalOpen] = useState(false);
+  const [selectedTestResult, setSelectedTestResult] = useState(null);
   const [expandedResults, setExpandedResults] = useState({});
 
   const fetchPatientData = async () => {
@@ -50,6 +53,24 @@ const PatientDetailsPage = () => {
       ...prev,
       [resultId]: !prev[resultId],
     }));
+  };
+
+  const handleEditTest = (result) => {
+    setSelectedTestResult(result);
+    setIsEditTestModalOpen(true);
+  };
+
+  const handleSaveEdit = async (values) => {
+    try {
+      await api.put(`/api/test-results/${selectedTestResult.id}`, { values });
+      setIsEditTestModalOpen(false);
+      setSelectedTestResult(null);
+      fetchPatientData();
+      toast.success("Test result updated successfully!");
+    } catch (error) {
+      console.error("Error updating test result:", error);
+      toast.error("Failed to update test result");
+    }
   };
 
   const getOverallStatus = (values) => {
@@ -303,6 +324,15 @@ const PatientDetailsPage = () => {
                                   ))}
                               </tbody>
                             </table>
+
+                            <div className="flex justify-end p-4">
+                              <button
+                                className="text-right px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-medium shadow-sm"
+                                onClick={() => handleEditTest(result)}
+                              >
+                                Edit
+                              </button>
+                            </div>
                           </div>
                         </div>
                       )}
@@ -320,6 +350,16 @@ const PatientDetailsPage = () => {
         onClose={() => setIsAddTestModalOpen(false)}
         patientId={id}
         onSuccess={fetchPatientData}
+      />
+
+      <EditTestResultModal
+        isOpen={isEditTestModalOpen}
+        onClose={() => {
+          setIsEditTestModalOpen(false);
+          setSelectedTestResult(null);
+        }}
+        onSave={handleSaveEdit}
+        testResult={selectedTestResult}
       />
     </Layout>
   );
