@@ -4,6 +4,8 @@ import api from "../api/axios";
 import Layout from "../components/Layout/Layout";
 import AddTestResultModal from "../components/Patients/AddTestResultModal";
 import EditTestResultModal from "../components/Patients/EditTestResultModal";
+import { PERMISSIONS } from "../utils/roles";
+
 import {
   FaUser,
   FaNotesMedical,
@@ -25,6 +27,9 @@ const PatientDetailsPage = () => {
   const [isEditTestModalOpen, setIsEditTestModalOpen] = useState(false);
   const [selectedTestResult, setSelectedTestResult] = useState(null);
   const [expandedResults, setExpandedResults] = useState({});
+
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const userPermissions = PERMISSIONS[user.role] || {};
 
   const fetchPatientData = async () => {
     try {
@@ -166,12 +171,14 @@ const PatientDetailsPage = () => {
             <h2 className="text-xl font-bold flex items-center text-gray-800">
               <FaNotesMedical className="mr-3 text-green-500" /> Test Results
             </h2>
-            <button
-              onClick={() => setIsAddTestModalOpen(true)}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition flex items-center text-sm font-medium shadow-sm"
-            >
-              <FaPlus className="mr-2" /> Add Test Result
-            </button>
+            {userPermissions.canCreateTestResults && (
+              <button
+                onClick={() => setIsAddTestModalOpen(true)}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition flex items-center text-sm font-medium shadow-sm"
+              >
+                <FaPlus className="mr-2" /> Add Test Result
+              </button>
+            )}
           </div>
 
           <div className="p-6">
@@ -325,14 +332,16 @@ const PatientDetailsPage = () => {
                               </tbody>
                             </table>
 
-                            <div className="flex justify-end p-4">
-                              <button
-                                className="text-right px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-medium shadow-sm"
-                                onClick={() => handleEditTest(result)}
-                              >
-                                Edit
-                              </button>
-                            </div>
+                            {userPermissions.canCreateTestResults && (
+                              <div className="flex justify-end p-4">
+                                <button
+                                  className="text-right px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-medium shadow-sm"
+                                  onClick={() => handleEditTest(result)}
+                                >
+                                  Edit
+                                </button>
+                              </div>
+                            )}
                           </div>
                         </div>
                       )}
