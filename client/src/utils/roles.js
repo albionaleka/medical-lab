@@ -24,17 +24,19 @@ export const PERMISSIONS = {
     canDeleteTestResults: true,
     canViewDashboard: true,
   },
+
   [ROLES.DOCTOR]: {
     canManageUsers: false,
     canManagePatients: false,
     canDeletePatients: false,
     canManageTestCategories: false,
     canManageTestPanels: false,
-    canCreateTestResults: true,
+    canCreateTestResults: false,
     canViewTestResults: true,
     canDeleteTestResults: false,
     canViewDashboard: true,
   },
+
   [ROLES.LABORANT]: {
     canManageUsers: false,
     canManagePatients: true,
