@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 5000;
 await connectDB();
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: ["http://localhost:5173"],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
@@ -27,7 +27,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use(express.json({ limit: '5mb' }));
+app.use(express.json({ limit: "5mb" }));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
