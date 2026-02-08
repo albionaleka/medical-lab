@@ -136,3 +136,27 @@ CREATE TABLE test_result_values (
   FOREIGN KEY (test_result_id) REFERENCES test_results(id),
   FOREIGN KEY (parameter_id) REFERENCES test_parameters(id)
 );
+
+USE medicalLab;
+ALTER TABLE test_result_values
+DROP FOREIGN KEY test_result_values_ibfk_1;
+
+ALTER TABLE test_result_values
+ADD CONSTRAINT test_result_values_ibfk_1
+FOREIGN KEY (test_result_id)
+REFERENCES test_results(id)
+ON DELETE CASCADE;
+
+USE medicalLab;
+ALTER TABLE test_results
+DROP FOREIGN KEY test_results_ibfk_1;
+
+ALTER TABLE test_results
+ADD CONSTRAINT test_results_ibfk_1
+FOREIGN KEY (patient_id)
+REFERENCES patients(id)
+ON DELETE CASCADE;
+
+USE medicalLab;
+ALTER TABLE patients
+ADD CONSTRAINT uq_personal_number UNIQUE (personal_number);
