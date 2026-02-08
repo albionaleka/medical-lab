@@ -1,4 +1,6 @@
 import { Patient } from "../models/Patient.js";
+import TestResult from "../models/TestResult.js";
+import TestResultValues from "../models/TestResultValues.js";
 
 export class PatientService {
   static async createPatient(patientData) {
@@ -49,9 +51,22 @@ export class PatientService {
   }
 
   static async deletePatient(patientId) {
-    const patient = await Patient.findByPk(patientId);
+    const patient = await Patient.findByPk(patientId, {
+      include: [
+        { association: "testResults", include: [{ association: "values" }] },
+      ],
+    });
     if (!patient) {
       throw new Error("Patient not found");
+    }
+
+    if (patient.testResults && patient.testResults.length > 0) {
+      for (const testResult of patient.testResults) {
+        if (testResult.values && testResult.values.length > 0) {
+          await Promise.all(testResult.values.map((value) => value.destroy()));
+        }
+        await testResult.destroy();
+      }
     }
 
     await patient.destroy();
