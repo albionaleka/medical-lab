@@ -5,9 +5,12 @@ import { FaPlus, FaSearch, FaEdit, FaTrash, FaEye } from "react-icons/fa";
 import CreatePatientModal from "./CreatePatientModal";
 import EditPatientModal from "./EditPatientModal";
 import ConfirmationModal from "./ConfirmationModal";
+import { PERMISSIONS } from "../utils/roles";
 
 const Patients = () => {
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const userPermissions = PERMISSIONS[user.role] || {};
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -100,13 +103,15 @@ const Patients = () => {
             />
           </div>
 
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="flex md:items-end items-center space-x-2 px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-md hover:shadow-lg whitespace-nowrap"
-          >
-            <FaPlus />
-            <span>Add Patient</span>
-          </button>
+          {userPermissions.canManagePatients && (
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="flex md:items-end items-center space-x-2 px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-md hover:shadow-lg whitespace-nowrap"
+            >
+              <FaPlus />
+              <span>Add Patient</span>
+            </button>
+          )}
         </div>
 
         <div className="bg-white rounded-xl shadow-md overflow-hidden">
@@ -144,12 +149,14 @@ const Patients = () => {
                   >
                     Contact
                   </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-4 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider"
-                  >
-                    Actions
-                  </th>
+                  {userPermissions.canManagePatients && (
+                    <th
+                      scope="col"
+                      className="px-6 py-4 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                    >
+                      Actions
+                    </th>
+                  )}
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200 block md:table-row-group">
@@ -203,33 +210,37 @@ const Patients = () => {
                           </span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 md:whitespace-nowrap text-right text-sm font-medium block md:table-cell flex justify-between md:block items-center">
-                        <span className="md:hidden font-semibold text-gray-500">
-                          Actions:
-                        </span>
-                        <div className="flex justify-end space-x-2">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleEdit(patient);
-                            }}
-                            className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition-all shadow-sm hover:shadow-md"
-                            title="Edit"
-                          >
-                            <FaEdit className="w-4 h-4" />
-                          </button>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDelete(patient.id);
-                            }}
-                            className="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 transition-all shadow-sm hover:shadow-md"
-                            title="Delete"
-                          >
-                            <FaTrash className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </td>
+                      {userPermissions.canManagePatients && (
+                        <td className="px-6 py-4 md:whitespace-nowrap text-right text-sm font-medium block md:table-cell flex justify-between md:block items-center">
+                          <span className="md:hidden font-semibold text-gray-500">
+                            Actions:
+                          </span>
+                          <div className="flex justify-end space-x-2">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleEdit(patient);
+                              }}
+                              className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition-all shadow-sm hover:shadow-md"
+                              title="Edit"
+                            >
+                              <FaEdit className="w-4 h-4" />
+                            </button>
+                            {userPermissions.canDeletePatients && (
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleDelete(patient.id);
+                                }}
+                                className="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 transition-all shadow-sm hover:shadow-md"
+                                title="Delete"
+                              >
+                                <FaTrash className="w-4 h-4" />
+                              </button>
+                            )}
+                          </div>
+                        </td>
+                      )}
                     </tr>
                   );
                 })}

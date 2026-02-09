@@ -221,25 +221,23 @@ const PatientDetailsPage = () => {
                               <div className="flex items-center gap-2">
                                 <FaCalendarAlt className="text-blue-500" />
                                 <span>
-                                  {new Date(result.testedAt).toLocaleDateString(
-                                    "en-US",
-                                    {
-                                      year: "numeric",
-                                      month: "long",
-                                      day: "numeric",
-                                    },
-                                  )}
+                                  {new Date(
+                                    result.created_at || result.testedAt,
+                                  ).toLocaleDateString("en-US", {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "numeric",
+                                  })}
                                 </span>
                               </div>
                               <span className="text-gray-400">•</span>
                               <span>
-                                {new Date(result.testedAt).toLocaleTimeString(
-                                  "en-US",
-                                  {
-                                    hour: "2-digit",
-                                    minute: "2-digit",
-                                  },
-                                )}
+                                {new Date(
+                                  result.created_at || result.testedAt,
+                                ).toLocaleTimeString("en-US", {
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                })}
                               </span>
                               <span className="text-gray-400">•</span>
                               <span className="font-medium">
