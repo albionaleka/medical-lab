@@ -16,7 +16,7 @@ export default function Layout({ children, title }) {
 
       <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
 
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col flex-1 lg:ml-64">
         <Header onMenuClick={() => setSidebarOpen(true)} title={title} />
         <main className="p-6">{children}</main>
       </div>

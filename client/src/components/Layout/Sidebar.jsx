@@ -30,9 +30,15 @@ const allMenuItems = [
     label: "Tests",
     icon: FaFlask,
     path: "/tests",
-    roles: [ROLES.ADMIN, ROLES.DOCTOR, ROLES.LABORANT],
+    roles: [ROLES.ADMIN, ROLES.LABORANT],
   },
-  { label: "Users", icon: FaUsers, path: "/users", roles: [ROLES.ADMIN] },
+
+  {
+    label: "Users",
+    icon: FaUsers,
+    path: "/users",
+    roles: [ROLES.ADMIN],
+  },
   {
     label: "Profile",
     icon: FaUser,
@@ -46,21 +52,21 @@ export default function Sidebar({ open, setOpen }) {
   const user = JSON.parse(localStorage.getItem("user") || "null");
 
   const menu = allMenuItems.filter(
-    (item) => user && item.roles.includes(user.role)
+    (item) => user && item.roles.includes(user.role),
   );
 
   const handleLogout = () => {
     logout();
-    window.location.href = "/login";
+    window.location.href = "/";
   };
 
   return (
     <aside
       className={`
-        fixed z-50 inset-y-0 left-0 w-64 bg-white flex flex-col
+        fixed z-50 inset-y-0 left-0 w-64 h-screen bg-white flex flex-col
         transform transition-transform duration-300
         ${open ? "translate-x-0" : "-translate-x-full"}
-        lg:translate-x-0 lg:static
+        lg:translate-x-0
       `}
     >
       <div className="flex items-center justify-between px-6 py-6 border-b border-gray-50/50">
@@ -85,9 +91,10 @@ export default function Sidebar({ open, setOpen }) {
             to={path}
             className={({ isActive }) => `
               flex items-center gap-3 w-full px-4 py-3 rounded-xl font-medium transition-all duration-200
-              ${isActive
-                ? "bg-blue-500 text-white"
-                : "text-gray-500 hover:bg-gray-50 hover:text-blue-500"
+              ${
+                isActive
+                  ? "bg-blue-500 text-white"
+                  : "text-gray-500 hover:bg-gray-50 hover:text-blue-500"
               }
             `}
           >
