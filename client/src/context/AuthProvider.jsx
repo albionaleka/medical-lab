@@ -6,7 +6,7 @@ import { AuthContext } from "./AuthContext";
 const AuthProvider = ({ children }) => {
   const storedToken = localStorage.getItem("token");
   const storedUser = localStorage.getItem("user");
-  
+
   const [loggedIn, setIsLoggedin] = useState(!!(storedToken && storedUser));
   const [token, setToken] = useState(storedToken);
   const [loading, setLoading] = useState(false);
@@ -29,7 +29,7 @@ const AuthProvider = ({ children }) => {
           localStorage.removeItem("user");
         }
         return Promise.reject(error);
-      }
+      },
     );
 
     return () => api.interceptors.response.eject(interceptor);
@@ -60,6 +60,8 @@ const AuthProvider = ({ children }) => {
         password,
         role,
       });
+
+      await login(email, password);
       toast.success(data.message);
     } catch (error) {
       toast.error(error.response?.data?.error || "Registration failed");
