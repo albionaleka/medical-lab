@@ -10,6 +10,8 @@ import testRoutes from "./routes/tests.js";
 import testParameterRoutes from "./routes/testParameters.js";
 import testResultRoutes from "./routes/testResults.js";
 import "./models/index.js";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./config/swagger.js";
 
 dotenv.config();
 
@@ -29,6 +31,15 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json({ limit: "5mb" }));
 
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, {
+    customCss: ".swagger-ui .topbar { display: none }",
+    customSiteTitle: "Lab System API Documentation",
+  }),
+);
+
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/patient", patientRoutes);
@@ -39,4 +50,5 @@ app.use("/api/test-results", testResultRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`API Documentation at http://localhost:${PORT}/api-docs`);
 });
