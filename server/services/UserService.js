@@ -3,6 +3,7 @@ import { User } from "../models/User.js";
 import { generateToken } from "../utils/jwt.js";
 import dotenv from "dotenv";
 import transporter from "../config/nodemailer.js";
+import { emailTemplates } from "../templates/emailTemplates.js";
 
 dotenv.config();
 const SALT = parseInt(process.env.SALT) || 10;
@@ -27,6 +28,18 @@ export class UserService {
       email: user.email,
       role: user.role,
     });
+
+    try {
+      await transporter.sendMail({
+        from: process.env.SENDER_EMAIL,
+        to: email,
+        subject: "Welcome to Laboratory Management System",
+        text: `Welcome! Your account has been created successfully with the role: ${role}`,
+        html: emailTemplates.welcomeTemplate(email, role),
+      });
+    } catch (error) {
+      console.error("Failed to send welcome email:", error);
+    }
 
     return {
       user: {
@@ -79,8 +92,9 @@ export class UserService {
       await transporter.sendMail({
         from: process.env.SENDER_EMAIL,
         to: email,
-        subject: "Password Reset OTP",
+        subject: "Password Reset OTP - Laboratory Management System",
         text: `Your OTP for password reset is: ${otp}. It is valid for 15 minutes.`,
+        html: emailTemplates.otpTemplate(otp, 15),
       });
     } catch (error) {
       throw new Error("Failed to send OTP email");
@@ -108,6 +122,18 @@ export class UserService {
     user.reset_otp = null;
     user.reset_otp_expires_at = null;
     await user.save();
+
+    try {
+      await transporter.sendMail({
+        from: process.env.SENDER_EMAIL,
+        to: email,
+        subject: "Password Successfully Reset - Laboratory Management System",
+        text: "Your password has been successfully reset. You can now log in with your new password.",
+        html: emailTemplates.passwordResetSuccessTemplate(),
+      });
+    } catch (error) {
+      console.error("Failed to send password reset confirmation email:", error);
+    }
 
     return {
       user: {
