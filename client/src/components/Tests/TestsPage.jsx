@@ -102,12 +102,19 @@ const TestsPage = () => {
 
   const confirmDeleteCategory = async () => {
     try {
+      setError(null);
       await TestsService.deleteCategory(itemToDelete);
       fetchCategories();
       setShowDeleteCategoryModal(false);
       setItemToDelete(null);
     } catch (error) {
       console.error("Error deleting category:", error);
+      setError(
+        error.response?.data?.error ||
+          "Failed to delete category. Please try again.",
+      );
+      setShowDeleteCategoryModal(false);
+      setItemToDelete(null);
     }
   };
 

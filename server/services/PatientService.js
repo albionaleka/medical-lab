@@ -1,6 +1,4 @@
 import { Patient } from "../models/Patient.js";
-import TestResult from "../models/TestResult.js";
-import TestResultValues from "../models/TestResultValues.js";
 
 export class PatientService {
   static async createPatient(patientData) {

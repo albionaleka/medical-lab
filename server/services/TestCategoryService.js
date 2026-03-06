@@ -28,10 +28,13 @@ class TestCategoryService {
   }
 
   static async deleteCategory(id) {
-    const category = await TestCategory.findByPk(id);
+    const category = await TestCategory.findByPk(id, {
+      include: { association: "panels" },
+    });
     if (!category) {
       throw new Error("Category not found");
     }
+
     await category.destroy();
     return true;
   }
